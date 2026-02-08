@@ -108,7 +108,8 @@ if fetch and channel_input:
             videos_df = get_video_details(get_video_ids(channel_id))
             insert_videos(videos_df, channel_id)
             st.success("✅ Channel data fetched successfully!")
-            st.experimental_rerun()
+            st.rerun()
+
         else:
             st.error("❌ Invalid YouTube link or channel")
 
@@ -178,3 +179,4 @@ st.dataframe(
 #     )
 #     ax2.set_ylabel("Videos")
 #     st.pyplot(fig2, use_container_width=True)
+
