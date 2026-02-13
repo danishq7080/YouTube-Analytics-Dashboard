@@ -1,15 +1,29 @@
 import sqlite3
 import pandas as pd
+from database import create_tables
 
 DB_NAME = "youtube_analytics.db"
 
 
 def load_data():
+    # Ensure tables exist first
+    create_tables()
+
     conn = sqlite3.connect(DB_NAME)
-    channels = pd.read_sql("SELECT * FROM channels", conn)
-    videos = pd.read_sql("SELECT * FROM videos", conn)
+
+    try:
+        channels = pd.read_sql("SELECT * FROM channels", conn)
+    except:
+        channels = pd.DataFrame()
+
+    try:
+        videos = pd.read_sql("SELECT * FROM videos", conn)
+    except:
+        videos = pd.DataFrame()
+
     conn.close()
     return channels, videos
+
 
 
 def add_engagement_rate(videos_df):
